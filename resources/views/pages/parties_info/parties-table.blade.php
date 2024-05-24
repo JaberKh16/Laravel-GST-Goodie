@@ -45,14 +45,19 @@
                 <tbody>
                     <tr>
                         <th>#</th>
-                        <th>Party Name</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th>Approval</th>
+                        <th>Name</th>
+                        <th>Party Type</th>
+                        <th>Contact</th>
+                        <th>Address</th>
+                        <th>Holder Name</th>
+                        <th>Account No</th>
+                        <th>Bank Name</th>
+                        <th>IFSC Code</th>
+                        <th>Branch Addr.</th>
+                        <th>Created At</th>
                         <th colspan="2">Action</th>
                     </tr>
-                    {{-- @if ($parties_record != null)
+                    @if ($parties_record != null)
                         @php
                             $start_serial = ($parties_record->currentPage() - 1) * $parties_record->perPage() + 1;
                             $end_serial = $start_serial + $parties_record->count() - 1;
@@ -60,25 +65,24 @@
                         @foreach ($parties_record as $record)
                             <tr>
                                 <td>{{ $start_serial++ }}</td>
-                                <td>{{ $record->parties_type }}</td>
-                                <td>{{ $record->email }}</td>
-                                <td>{{ $record->status }}</td>
+                                <td>{{ $record->fullname }}</td>
+                                <td>{{ $parties_type[$record->id] ?? 'N/A' }}</td>
+                                <td>{{ $record->contact }}</td>
+                                <td>{{ $record->address }}</td>
+                                <td>{{ $record->account_holder_name }}</td>
+                                <td>{{ $record->account_no }}</td>
+                                <td>{{ $record->bank_name }}</td>
+                                <td>{{ $record->ifsc_code }}</td>
+                                <td>{{ $record->branch_address }}</td>
                                 <td>{{ $record->created_at->format('Y-m-d') }}</td>
                                 <td>
-                                    @if ($record->status === 'verified')
-                                        <a href="{{ route('parties.type.update.status', ['parties', $record->id, 'non-verified']) }}" type="button" class="btn btn-warning text-white">Non Verified</a>
-                                    @else
-                                        <a href="{{ route('parties.type.update.status', ['parties', $record->id, 'verified']) }}" type="button" class="btn btn-primary text-white">Verified</a>
-                                    @endif
-                                </td>
-                            <td>
                                     <div class="dropdown">
                                         <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Options
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a href="{{ route('parties.type.form.edit', $record->id) }}" class="dropdown-item btn btn-warning text-white p-2"><i class="fa fa-edit"></i> Edit</a>
-                                            <a href="{{ route('parties.type.form.delete', $record->id) }}" class="dropdown-item btn btn-danger text-white p-2" onclick="return confirmDeletion(event)"><i class="fa fa-trash"></i> Delete</a>
+                                            <a href="{{ route('parties.info.form.edit', $record->id) }}" class="dropdown-item btn btn-warning text-white p-2"><i class="fa fa-edit"></i> Edit</a>
+                                            <a href="{{ route('parties.info.form.delete', $record->id) }}" class="dropdown-item btn btn-danger text-white p-2" onclick="return confirmDeletion(event)"><i class="fa fa-trash"></i> Delete</a>
                                         </div>-
                                     </div>
                                 </td>
@@ -88,14 +92,14 @@
                         @endforeach
                     @else
                         <td colspan="5">No record found</td>
-                    @endif --}}
+                    @endif
                 </tbody>
             </table>
         </div>
 
 
         {{-- Paginator Setup --}}
-        {{-- <div class="card-footer text-right">
+        <div class="card-footer text-right">
             <nav class="d-inline-block">
                 <ul class="pagination mb-0">
                     @if ($parties_record->onFirstPage())
@@ -135,7 +139,7 @@
                     @endif
                 </ul>
             </nav>
-        </div> --}}
+        </div>
 
 
 

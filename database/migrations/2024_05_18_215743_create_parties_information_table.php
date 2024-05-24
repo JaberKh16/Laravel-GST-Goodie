@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('parties_type_id');
             $table->foreign('parties_type_id')->references('id')->on('parties');
-            $table->string("full_name", 100)->default('null')->nullable();
+            $table->string("fullname", 100)->default('null')->nullable();
             $table->string("contact", 15)->default('null')->nullable();
             $table->text("address")->default('null')->nullable();
             $table->string("account_holder_name")->default('null')->nullable();

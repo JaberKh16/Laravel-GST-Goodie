@@ -13,7 +13,7 @@
         <ul class="dropdown-menu">
             <li><a class="nav-link" href="{{ route('parties.type.info') }}">Party Management</a></li>
             <li><a class="nav-link" href="{{ route('parties.info') }}">Party Info Management</a></li>
-            {{-- <li><a class="nav-link" href="#">Leave Management</a></li> --}}
+            <li><a class="nav-link" href="{{ route('gst.billings.info') }}">Billings Management</a></li>
         </ul>
     </li>
 </div>

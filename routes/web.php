@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Party\PartiesController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Authenticate\AuthenticationController;
+use App\Http\Controllers\Billings\GSTBillingsController;
 use App\Http\Controllers\Party\PartiesInformationController;
 
 /*
@@ -56,7 +57,21 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parties/info', [PartiesInformationController::class, 'parties_info_index'])->name('parties.info');
     Route::get('/parties/form', [PartiesInformationController::class, 'parties_info_create_form_view'])->name('parties.form.view');
     Route::post('/parties/form/store', [PartiesInformationController::class, 'parties_info_create_form_store'])->name('parties.form.store');
-    Route::get('/parties/search', [PartiesInformationController::class, 'search_info_process'])->name('parties.search');
+    Route::get('/parties/info/form/edit/{id}', [PartiesInformationController::class, 'parties_info_edit_form_view'])->name('parties.info.form.edit');
+    Route::post('/parties/info/form/update/{id}', [PartiesInformationController::class, 'parties_info_update_form_store'])->name('parties.info.form.update');
+    Route::get('/parties/info/form/delete/{id}', [PartiesInformationController::class, 'parties_info_delete_record'])->name('parties.info.form.delete');
+    Route::get('/parties/info/search', [PartiesInformationController::class, 'search_info_process'])->name('parties.search');
+
+    // billing routes
+    Route::get('/parties/gst/bills/info', [GSTBillingsController::class, 'gst_billings_index'])->name('gst.billings.info');
+    Route::get('/parties/gst/bills/info', [GSTBillingsController::class, 'gst_billings_create_form_view'])->name('gst.billings.form.view');
+    Route::post('/parties/gst/bills/info', [GSTBillingsController::class, 'gst_billings_create_form_store'])->name('gst.billings.form.store');
+    Route::get('/parties/gst/bills/search', [GSTBillingsController::class, 'search_info_process'])->name('gst.billings.search');
+
 
 });
+
+    
+
+    
 

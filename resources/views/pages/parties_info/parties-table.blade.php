@@ -88,10 +88,18 @@
                                 </td>
 
                             </tr>
-                            
                         @endforeach
                     @else
-                        <td colspan="5">No record found</td>
+                        <!-- Check if there is a message for no records found -->
+                        @if(isset($message) && $message)
+                            <tr>
+                                <td colspan="5">{{ $message }}</td>
+                            </tr>
+                        @else
+                           <tr>
+                                <td colspan="5">No record available</td>
+                            </tr>
+                        @endif
                     @endif
                 </tbody>
             </table>
@@ -102,40 +110,42 @@
         <div class="card-footer text-right">
             <nav class="d-inline-block">
                 <ul class="pagination mb-0">
-                    @if ($parties_record->onFirstPage())
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                        </li>
-                    @else
-                        <li class="page-item">
-                            <a class="page-link" href="{{ $parties_record->previousPageUrl() }}" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                        </li>
-                    @endif
-
-                    @foreach ($parties_record->links()->elements as $element)
-                        @if (is_string($element))
-                            <li class="page-item disabled"><span class="page-link">{{ $element }}</span></li>
+                    @if (isset($parties_record)) 
+                        @if ($parties_record->onFirstPage())
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $parties_record->previousPageUrl() }}" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                            </li>
                         @endif
 
-                        @if (is_array($element))
-                            @foreach ($element as $page => $url)
-                                @if ($page == $parties_record->currentPage())
-                                    <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
-                                @else
-                                    <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
-                                @endif
-                            @endforeach
-                        @endif
-                    @endforeach
+                        @foreach ($parties_record->links()->elements as $element)
+                            @if (is_string($element))
+                                <li class="page-item disabled"><span class="page-link">{{ $element }}</span></li>
+                            @endif
 
-                    @if ($parties_record->hasMorePages())
-                        <li class="page-item">
-                            <a class="page-link" href="{{ $parties_record->nextPageUrl() }}"><i class="fas fa-chevron-right"></i></a>
-                        </li>
-                    @else
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                        </li>
+                            @if (is_array($element))
+                                @foreach ($element as $page => $url)
+                                    @if ($page == $parties_record->currentPage())
+                                        <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
+                                    @else
+                                        <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+
+                        @if ($parties_record->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $parties_record->nextPageUrl() }}"><i class="fas fa-chevron-right"></i></a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                            </li>
+                        @endif
                     @endif
                 </ul>
             </nav>

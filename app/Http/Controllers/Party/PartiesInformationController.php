@@ -36,11 +36,11 @@ class PartiesInformationController extends Controller
     public function parties_info_create_form_view()
     {
         // get all Party records
-        $party = PartiesInformation::all(); 
+        $party = Party::all(); 
         // call the static method
         $parties_type = Party::get_available_parties_type($party); 
 
-        return view('pages.parties_info.parties-edit-form', compact('party'));
+        return view('pages.parties_info.parties-form', compact('parties_type'));
     }
 
     public function parties_info_create_form_store(Request $request)
@@ -125,7 +125,8 @@ class PartiesInformationController extends Controller
         
     }
 
-    public function parties_info_delete_record(string $id){
+    public function parties_info_delete_record(string $id)
+    {
         $msg = null;
         try{
             $find_party = PartiesInformation::where('id', $id)->first();
@@ -149,18 +150,29 @@ class PartiesInformationController extends Controller
         ]);
 
         // search the parties based on the query
-        $parties = PartiesInformation::where('fullname', 'LIKE', "%{$query}%")
-                        ->orWhere('parties_type', 'LIKE', "%{$query}%")
+        $parties_record = PartiesInformation::where('fullname', 'LIKE', "%{$query}%")
                         ->orWhere('contact', 'LIKE', "%{$query}%")
                         ->orWhere('account_holder_name', 'LIKE', "%{$query}%")
                         ->orWhere('account_no', 'LIKE', "%{$query}%")
                         ->orWhere('bank_name', 'LIKE', "%{$query}%")
                         ->orWhere('ifsc_code', 'LIKE', "%{$query}%")
-                        ->orWhere('branch_name', 'LIKE', "%{$query}%")
                         ->orWhere('branch_address', 'LIKE', "%{$query}%")
                         ->paginate(5);
 
-        // return the view with the search results
-        return view('pages.parties_info.parties-table', ['parties_record' => $parties, 'serial_no' => 1]);
+        // Check if there are any records
+        if ($parties_record->isEmpty()) {
+            return view('pages.parties_info.parties-table', [
+                'parties_record' => null,
+                'serial_no' => 1,
+                'message' => 'No records found for your search query.'
+            ]);
+        } else {
+            return view('pages.parties_info.parties-table', [
+                'parties_record' => $parties_record,
+                'serial_no' => 1,
+                'message' => null
+            ]);
+        }
+
     }
 }

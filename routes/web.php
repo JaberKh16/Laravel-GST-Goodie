@@ -64,8 +64,11 @@ Route::middleware(['auth'])->group(function(){
 
     // billing routes
     Route::get('/parties/gst/bills/info', [GSTBillingsController::class, 'gst_billings_index'])->name('gst.billings.info');
-    Route::get('/parties/gst/bills/info', [GSTBillingsController::class, 'gst_billings_create_form_view'])->name('gst.billings.form.view');
+    Route::get('/parties/gst/bills/form', [GSTBillingsController::class, 'gst_billings_create_form_view'])->name('gst.billings.form.view');
     Route::post('/parties/gst/bills/info', [GSTBillingsController::class, 'gst_billings_create_form_store'])->name('gst.billings.form.store');
+    Route::get('/parties/gst/bills/edit/{id}', [GSTBillingsController::class, 'gst_billings_edit_form_view'])->name('gst.billings.form.edit');
+    Route::post('/parties/gst/bills/update/{id}', [GSTBillingsController::class, 'gst_billings_update_form_store'])->name('gst.billings.form.update');
+    Route::get('/parties/gst/bills/delete/{id}', [GSTBillingsController::class, 'gst_billings_delete_record'])->name('gst.billings.form.delete');
     Route::get('/parties/gst/bills/search', [GSTBillingsController::class, 'search_info_process'])->name('gst.billings.search');
 
 
